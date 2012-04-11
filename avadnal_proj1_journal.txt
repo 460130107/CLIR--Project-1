@@ -1,0 +1,11 @@
+Andrew Vadnal
+326558
+[date]
+Project 1 - Journal
+================================================
+The allocated time for this project is 24 hours.
+================================================
+
+Hour 1. Spent in the tutorial before the Easter week break. Was primarily reading the supplied paper for the Phrase Based Model. It looks really interesting, and I can understand how it relates to real world translations. Seems much more practical than the simple word alignments seen in the previous assignment using IBM Model 1. However, I did not get through the entire paper and will continue to read it next time.
+
+
