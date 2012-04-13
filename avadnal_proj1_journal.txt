@@ -8,4 +8,25 @@ The allocated time for this project is 24 hours.
 
 Hour 1. Spent in the tutorial before the Easter week break. Was primarily reading the supplied paper for the Phrase Based Model. It looks really interesting, and I can understand how it relates to real world translations. Seems much more practical than the simple word alignments seen in the previous assignment using IBM Model 1. However, I did not get through the entire paper and will continue to read it next time.
 
+Hour 2. Read the remainder of the section of the Phrase Based Model in
+addition to the subsequent sections on log-linear models and lexical
+weighting/word penalties. If I decide to implement a PBM, I plan to implement
+the outlined algorithm first. If time permits, I will incorporate some
+of the aforementioned techniques in order to observe whether this improves the quality
+of the returned phrase pairs. I will now investigate the higher IBM Models
+(Model 2 and 3 possibily).
 
+Hour 3. Read about IBM Model 2. Found IBM Model 2 algorithm: http://www-rohan.sdsu.edu/~gawron/mt_plus/mt/course_core/lectures/assignment_five.pdf
+Continued researching IBM Model 2. 
+
+Hour 4. Reading about IBM Model 3, still not sure whether or not to implement
+the IBM Models or not. I feel like challenging myself by implementing a
+completely new algorithm. At this point in time, the Phrase Based Model
+interests me the most. Started reading about the Compressed Term Index
+approach (chapter 4 - provided).
+
+Hour 5. Skimmed through the remainder of chapter 4 and began reading chapter 5
+of the Compressed Term Index. Read this purely out of curiousity, in order to
+get an idea of the sort of implementable CLIR components. Based on what I have
+read, I'm going to stick with the implementation of a Phrase Based Model;
+using the provided algorithm in the Koehn paper (chapter 5). 
