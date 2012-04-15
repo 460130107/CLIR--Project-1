@@ -30,3 +30,7 @@ of the Compressed Term Index. Read this purely out of curiousity, in order to
 get an idea of the sort of implementable CLIR components. Based on what I have
 read, I'm going to stick with the implementation of a Phrase Based Model;
 using the provided algorithm in the Koehn paper (chapter 5). 
+
+Hour 6. Started development. Setting up the file, implementing the phrase extraction algorithm - figure 5.5, Koehn chapter 5 - http://langtech.github.com/clir/materials/koehn-05.pdf. WORD ALIGNMENT, so instead of inputting pairs of words like in the IBM Model 1 assignment, give as input word-level alignments.
+
+Hour 7-8. Development. My current uncertainties arise primarily from the data structures to use and what is meant by the two loop conditions: "until fe aligned" and "fs aligned". For the time being, I'm assuming that this means 'while each fe has been processed against every fs and vice versa'. I initially used the defaultdict data structure primarily because it was used in the previous assignment, however it doesn't look like this algorithm really requires the need for dictionaries so I'm going to be using sets for storing phrase pairs and word alignments initially. This is subject to change, as when I start compiling and testing the chosen data structures may or may not be adequate. Continued development will tell.
