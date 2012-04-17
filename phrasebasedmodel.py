@@ -12,30 +12,28 @@ from collections import defaultdict
 
 class Phrase_Based_Model:
     """
-    Phrase Based Model class - containing all functionality outlined in the aforementioned algorithm
+    Phrase Based Model class - containing all functionality outlined in
+    the aforementioned algorithm
     """
 
-    def __init__(self):
+    def __init__(self, alignments, sent_pairs, alignment_table):
         """
-      
+        Class constructor. 
+        Input: Word level alignment mapping between english->foreign
+        Input: Sentence pairs (e,f). Data structure is a list of lists, where
+               e is represented by sent_pairs[0] and f by sent_pairs[1]    
         """
-        #self.mapped_sents = mapped_sents
-        self.alignments = [(['michael', 'michael']),
-                            (['assumes', 'geht']),
-                            (['that', 'davon']),
-                            (['he', 'aus']),
-                            (['will', 'dass']),
-                            (['stay', 'er']),
-                            (['in', 'im']),
-                            (['the', 'haus']),
-                            (['house', 'bleibt'])]
 
-    #each phrase pair from the sentence pair is generated using word alignment because
-    #its words match up consistently
+        #each phrase pair from the sentence pair is generated using word
+        #alignment because its words match up consistently
+        self.alignment_table = alignment_table
+        self.eng_sent = sent_pairs[0]
 
+        self.for_sent = sent_pairs[1]
+        self.alignments = alignments
 
         self.eng_set = set()#defaultdict(list)
-        self.phrase_pairs = set()#defaultdict(list)
+        self.phrase_pairs = list()#defaultdict(list)
 
         #self.table_ef = defaultdict(lambda: defaultdict(int)) #t(e|f) table
         #self.count_ef = defaultdict(lambda: defaultdict(int)) #count(e|f) table
@@ -45,36 +43,47 @@ class Phrase_Based_Model:
     def extract(self, f_start, f_end, e_start, e_end):
     #this could probably be recursive
 
-    """
-    The extraction of word alignments for sentence pairs.
-    Input: Word alignment A for sentence pair (e,f)
-    Output: Set of phrase pairs BP
-    """
-    if f_end == 0: # check if at least one alignment point
-        return set()
-
-    for e,f in self.alignments:
-        if e < e_start or e > e_end:
+        """
+        The extraction of word alignments for sentence pairs.
+        Input: Word alignment A for sentence pair (e,f)
+        Output: Set of phrase pairs BP
+        """
+        if f_end == 0: # check if at least one alignment point
+            print "YES F_END == 0"
             return set()
-    # add phrase pairs (incl. additional unaligned f)
-    count_e = f_start
-    print "initial count_e = ", count_e
 
-    for s in self.alignments:
-        sent_e = s[0] #english sentence pair
-        sent_f = s[1] #foreign sentence pair
+        for e,f in self.alignment_table:
+            if e < e_start or e > e_end:
+                print "YES E<ESTART OR E>END"
 
-        #count_e, count_f = 0 #len(sent_e)
-        
-        while (count_f != len(sent_e): #i'm guessing NOT ALIGNED to mean all it's possible alignments have not been considered yet
-            count_f = f_end
-            print "count_f = ", count_f
+                return set()
+        # add phrase pairs (incl. additional unaligned f)
+        count_e = f_start
+        print "initial count_e = ", count_e
 
-            while (count_e != len(sent_f)):
-                self.eng_set.add((e_start, f_start))  #add phrase pair (e_start..e_end, fs..fe)
-                count_f += 1
+        for s in self.alignment_table:
+            sent_e = s[0] #english sentence pair
+            print sent_e
+            sent_f = s[1] #foreign sentence pair
+            print sent_f
 
-            count_e -= 1     
+            #count_e, count_f = 0 #len(sent_e)
+            
+            while count_f != len(sent_e): 
+                #i'm guessing NOT ALIGNED to mean all its possible alignments
+                #that have not been considered yet
+                count_f = f_end
+                print "count_f = ", count_f
+
+                while count_e != len(sent_f):
+                    self.eng_set.add((e_start, f_start))
+                    #add phrase pair 
+                    #(e_start..e_end, fs..fe)
+                    count_e += 1
+
+                count_f -= 1
+
+        return self.eng_set     
 
     def execute(self, eng_sent, for_sent):
         """
@@ -87,12 +96,74 @@ class Phrase_Based_Model:
                 # find the minimally matching foreign phrase
                 f_start = len(for_sent)
                 f_end = 0
-                for e,f in self.alignments:
-                    if e_start <= eng_sent <= e_end:
+
+                for e,f in self.alignment_table:
+                    print e_start
+                    print e
+                    print e_end
+                    print '----'
+
+
+                    if e_start <= e <= e_end:
+                        print "YES DOUBLE IF"
                         f_start = min(f, f_start)
                         f_end = max(f, f_end)
 
-                self.phrase_pairs.add(self.extract(f_start, f_end, e_start, e_end))
+                        
+                
+                #print "fstart = %s\n f_end = %s\n, e_start = %s\n, e_end = %s\n"  % (f_start,f_end,e_start,e_end)
+                       
+                self.phrase_pairs.append(self.extract(f_start, f_end,
+                                                    e_start, e_end))
+        #print "Now outputting self.phrase_pairs"
+        #print "-------------------------------"
+
+        #for item in self.phrase_pairs:
+        #    print item
+e = "michael assumes that he will stay in the house".split()
+f = "michael gent davon aus dass er im haus bleibt".split()
+
+sent_pairs = list(e), list(f)
+word_alignments = zip(e,f) #Word-word alignments
+
+alignment_table = list() #The alignment table
+[alignment_table.append((x,y)) for x in e for y in f]
+
+
+pbm = Phrase_Based_Model(word_alignments, sent_pairs, alignment_table)
+pbm.execute(pbm.eng_sent, pbm.for_sent)
+print len(pbm.phrase_pairs)
+#36 phrase pairs (there are 36 distinct contiguous English phrases)
+
+"""
+word_alignments = [(['michael', 'michael']),
+             (['assumes', 'geht'])]
+eng = list()
+foreign = list()
+
+[eng.append(word[0]) for word in word_alignments]
+[foreign.append(word[1]) for word in word_alignments]
+sent_pairs = list((eng, foreign))
+
+#print pbm.eng_sent
+
+"""
+
+
+#sent_pairs[0] = eng sentence, [1] = for sentence 
+
+"""
+ (['that', 'davon']),
+ (['he', 'aus']),
+ (['will', 'dass']),
+ (['stay', 'er']),
+ (['in', 'im']),
+ (['the', 'haus']),
+ (['house', 'bleibt'])]
+"""
+
+
+                                                    
 
 
     
