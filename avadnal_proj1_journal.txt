@@ -70,3 +70,18 @@ problem should be simple to remedy, given that my uncertainties are clarified
 and I feel I'm certainly more than half way there in regards to a complete
 algorithm implementation.
 
+Hour 15. Spent in the tutorial. It was a helpful tutorial, as I was able to
+identify some errors in the way I was handling data in my program. Firstly, I
+learned that the program input itself is the word alignments, namely a list of
+(e,f) offset pairs instead of the actual words themselves. I was neglecting this
+data completely up until this point, and how it fits into the algorithm is more
+evident to me now. I have hard-coded the word alignments in that correspond to
+the phrase table in the Koehn paper for the time being. My current uncertainty
+is still regarding the two loop exit conditions: 'until fe aligned' and 'until
+fs aligned'. The way I understand the algorithm is that we are extracting phrase
+pairs from a populated phrase table (courtesy of the word alignment list) - and
+not actually doing any physical aligning. I feel like I might have to do some
+hacking with different exit conditions to see if desirable output is achieved.
+If I have no luck, I'll most likely turn to Google. If this fails as well, I'll
+send Steven an email to see if he can help out.
+
