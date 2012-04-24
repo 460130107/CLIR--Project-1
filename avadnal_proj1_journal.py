@@ -1,5 +1,9 @@
-Andrew Vadnal 326558 [date] Project 1 - Journal
-
+#Andrew Vadnal
+#326558
+#24/4/2012
+#Project 1 (Phrase Based Model)
+#Journal
+'''
 ============= The allocated time for this project is 24 hours.=============
 
 Hour 1. Spent in the tutorial before the Easter week break. Was primarily
@@ -85,6 +89,42 @@ hacking with different exit conditions to see if desirable output is achieved.
 If I have no luck, I'll most likely turn to Google. If this fails as well, I'll
 send Steven an email to see if he can help out.
 
-Hour 15-18. After tracing through my code, I discovered that my two repeat loops were never being reached. This was due to the empty set being returned each time, as the condition e < e_start or e > e_end was being met each run through the extract function. Further, it was only processing the first word alignment pair each time, as the function was returning set() each run through the for loop, and would begin at this same position each time the extract function was called. I worked around this by adding a global counter, which was calling (for e) word_alignment[counter][0] each time the check was performed, where counter < length of word alignment table. I'm suspecting that the check listed in the algorithm might not cover all the possible cases that should be checked. See how I go in the tutorial tomorrow.
+Hour 15-18. After tracing through my code, I discovered that my two repeat loops
+were never being reached. This was due to the empty set being returned each
+time, as the condition e < e_start or e > e_end was being met each run through
+the extract function. Further, it was only processing the first word alignment
+pair each time, as the function was returning set() each run through the for
+loop, and would begin at this same position each time the extract function was
+called. I worked around this by adding a global counter, which was calling (for
+e) word_alignment[counter][0] each time the check was performed, where counter <
+length of word alignment table. I'm suspecting that the check listed in the
+algorithm might not cover all the possible cases that should be checked. See how
+I go in the tutorial tomorrow.
 
-Hour 19. Spent in the tutorial. My suspicions were correct, in that the aforementioned for loop was not covering all possible conditions. Added in checks to see if the phrase pairs are being consistent with the word alignment. 4 in total. An empty set is no longer being returned each time. However, I'm unsure if I'm adding in the phrase pairs correctly - as described in line 12 of the extract function.  I'm also still unsure about the two exit conditions specified. I feel I'm about 80% complete at this point in time - just needing to properly add in the phrase pairs (which I should be obtaining correctly) and understanding the two exit conditions.
+Hour 19. Spent in the tutorial. My suspicions were correct, in that the
+aforementioned for loop was not covering all possible conditions. Added in
+checks to see if the phrase pairs are being consistent with the word alignment.
+4 in total. An empty set is no longer being returned each time. However, I'm
+unsure if I'm adding in the phrase pairs correctly - as described in line 12 of
+the extract function.  I'm also still unsure about the two exit conditions
+specified. I feel I'm about 80% complete at this point in time - just needing to
+properly add in the phrase pairs (which I should be obtaining correctly) and
+understanding the two exit conditions.
+
+Hour 20-24. Finished off the assignment. It is now replicating the output
+produced in the Koehn paper which I am happy about. Never quite worked out
+exactly what the two while exit conditions were, but using 2 while true loops
+seemed to be a nice work around. Found some crucial bugs in my code from last
+time - which were both occurring in the extract function. (I can't remember why
+but) I commented out the population of my f_index array - which kept a track of
+the the foreign index values in my word alignment list, causing these indexes to
+not be processed at all. Secondly the phrase pair I was adding was (e_start,fs)
+instead of ((e_start,e_end), (fs_fe)). Lastly, I had been getting confused with
+the way this algorithm had generated output. For example, given output like
+[(a,b), (c,d)] (which are all numerical + a phrase pair) I was referencing my
+word table by key (a,b) and getting out one value. What I didn't realise was
+that (a,b) is in fact A RANGE. This allowed me to reference my original sentence
+and print out all words which corresponded to the lower bound a and the upper
+bound b for both english and foreign. Once these issues were figured out,
+resolving my past issues were relatively trivial.
+'''
